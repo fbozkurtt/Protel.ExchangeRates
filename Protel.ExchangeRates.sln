@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31702.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Protel.ExchangeRates.API", "src\Api\Protel.ExchangeRates.API.csproj", "{34E99F1F-C622-49A5-A048-C008B80AFC41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protel.ExchangeRates.Data", "src\Libraries\Protel.ExchangeRates.Data\Protel.ExchangeRates.Data.csproj", "{D94027A8-5454-449E-8EE4-E118AA387598}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{5D08B8A2-7190-4DF1-B5E0-93EA87869F6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{2ED694E5-CBF5-4D37-A32D-D79AAE697658}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protel.ExchangeRates.Core", "src\Libraries\Protel.ExchangeRates.Core\Protel.ExchangeRates.Core.csproj", "{A8BC4B6B-3B9B-455B-8B6B-5395F467B370}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protel.ExchangeRates.Services", "src\Libraries\Protel.ExchangeRates.Services\Protel.ExchangeRates.Services.csproj", "{57A90161-025C-4D25-B787-642E879C93D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34E99F1F-C622-49A5-A048-C008B80AFC41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34E99F1F-C622-49A5-A048-C008B80AFC41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34E99F1F-C622-49A5-A048-C008B80AFC41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34E99F1F-C622-49A5-A048-C008B80AFC41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D94027A8-5454-449E-8EE4-E118AA387598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D94027A8-5454-449E-8EE4-E118AA387598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D94027A8-5454-449E-8EE4-E118AA387598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D94027A8-5454-449E-8EE4-E118AA387598}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8BC4B6B-3B9B-455B-8B6B-5395F467B370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8BC4B6B-3B9B-455B-8B6B-5395F467B370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8BC4B6B-3B9B-455B-8B6B-5395F467B370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8BC4B6B-3B9B-455B-8B6B-5395F467B370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57A90161-025C-4D25-B787-642E879C93D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57A90161-025C-4D25-B787-642E879C93D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57A90161-025C-4D25-B787-642E879C93D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57A90161-025C-4D25-B787-642E879C93D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{34E99F1F-C622-49A5-A048-C008B80AFC41} = {2ED694E5-CBF5-4D37-A32D-D79AAE697658}
+		{D94027A8-5454-449E-8EE4-E118AA387598} = {5D08B8A2-7190-4DF1-B5E0-93EA87869F6E}
+		{A8BC4B6B-3B9B-455B-8B6B-5395F467B370} = {5D08B8A2-7190-4DF1-B5E0-93EA87869F6E}
+		{57A90161-025C-4D25-B787-642E879C93D6} = {5D08B8A2-7190-4DF1-B5E0-93EA87869F6E}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DC459878-D537-4B57-A4F2-09D389C95550}
+	EndGlobalSection
+EndGlobal
