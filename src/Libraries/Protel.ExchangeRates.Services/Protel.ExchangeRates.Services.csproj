@@ -4,4 +4,14 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Protel.ExchangeRates.Core\Protel.ExchangeRates.Core.csproj" />
+    <ProjectReference Include="..\Protel.ExchangeRates.Data\Protel.ExchangeRates.Data.csproj" />
+  </ItemGroup>
+
 </Project>

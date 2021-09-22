@@ -7,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Protel.ExchangeRates.Core;
+using Protel.ExchangeRates.Data;
+using Protel.ExchangeRates.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +29,26 @@ namespace Protel.ExchangeRates.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplication(Configuration);
 
+            services.AddData(Configuration);
+
+            services.AddServices(Configuration);
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                                  builder =>
+                                  {
+                                      builder.AllowAnyOrigin()
+                                      .AllowAnyHeader()
+                                      .AllowAnyMethod();
+                                  });
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Protel.ExchangeRates.API", Version = "v1" });
+                c.SwaggerDoc(ExchangeRatesVersion.CURRENT_VERSION, new OpenApiInfo { Title = "Protel.ExchangeRates.API", Version = ExchangeRatesVersion.CURRENT_VERSION });
             });
         }
 
@@ -41,14 +59,19 @@ namespace Protel.ExchangeRates.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Protel.ExchangeRates.API v1"));
+                app.UseSwaggerUI(options => {
+                    options.SwaggerEndpoint($"/swagger/{ExchangeRatesVersion.CURRENT_VERSION}/swagger.json", $"Protel.ExchangeRates.API {ExchangeRatesVersion.CURRENT_VERSION}");
+                   // options.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseCors("AllowAll");
+
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

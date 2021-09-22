@@ -1,11 +1,13 @@
-﻿using System;
+﻿using Protel.ExchangeRates.Core.Events;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Protel.ExchangeRates.Core.Domain
 {
-    public partial class Currency : BaseEntity
+    public partial class ExchangeRate : BaseEntity, IHasDomainEvent
     {
         public int CrossOrder { get; set; }
         public string Kod { get; set; }
@@ -20,6 +22,7 @@ namespace Protel.ExchangeRates.Core.Domain
         public decimal CrossRateUSD { get; set; }
         public decimal CrossRateOther { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+        [NotMapped]
+        public List<DomainEvent> DomainEvents { get; set; }  = new List<DomainEvent>();
     }
 }
