@@ -38,7 +38,7 @@ namespace Protel.ExchangeRates.Services
 
             services.AddSingleton(new JobScheduler(
                 jobType: typeof(UpdateExchangeRatesJob),
-                cronExpression: "0/10 * * ? * * *"));//0 0 9-18 ? * MON-FRI *
+                cronExpression: "0 0 9-18 ? * MON-FRI *")); // work hours
 
             return services;
         }
