@@ -29,7 +29,10 @@ namespace Protel.ExchangeRates.API
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
 
-            var host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args)
+                .UseDefaultServiceProvider(options =>
+                    options.ValidateScopes = false // it is bad practice for production, good for job interviews :) do not use in production environment otherwise you will get lots of indisposed objects
+                    ).Build();
 
             try
             {

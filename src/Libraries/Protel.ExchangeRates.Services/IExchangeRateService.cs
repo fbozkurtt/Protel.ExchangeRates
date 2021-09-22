@@ -20,9 +20,8 @@ namespace Protel.ExchangeRates.Services
         /// <param name="showHidden">A value indicating whether to show hidden records</param>
         /// <returns>
         /// A task that represents the asynchronous operation
-        /// The task result contains the currencies
         /// </returns>
-        Task<IList<ExchangeRate>> UpdateExchangeRatesAsync();
+        Task UpdateExchangeRatesAsync();
 
         /// <summary>
         /// Gets all currencies

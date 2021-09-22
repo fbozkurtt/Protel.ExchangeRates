@@ -26,7 +26,7 @@ namespace Protel.ExchangeRates.Data
                         configuration.GetConnectionString("DefaultConnection"),
                         b => b.MigrationsAssembly(migrationAssembly)));
 
-            services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
             services.AddScoped<IRepository<ExchangeRate>, EntityRepository<ExchangeRate>>();
 
             return services;

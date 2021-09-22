@@ -19,7 +19,7 @@ namespace Protel.ExchangeRates.Services
     {
         #region Fields
 
-        private readonly IRepository<ExchangeRate> _currencyRepository;
+        private readonly IRepository<ExchangeRate> _exchangeRateRepository;
         private readonly IHttpClientFactory _clientFactory;
 
         #endregion
@@ -28,7 +28,7 @@ namespace Protel.ExchangeRates.Services
 
         public ExchangeRateService(IRepository<ExchangeRate> currencyRepository, IHttpClientFactory clientFactory)
         {
-            _currencyRepository = currencyRepository;
+            _exchangeRateRepository = currencyRepository;
             _clientFactory = clientFactory;
         }
 
@@ -39,7 +39,7 @@ namespace Protel.ExchangeRates.Services
 
         public async Task<IList<ExchangeRate>> GetCurrentExchangeRatesAsync(string sortBy = "rate", bool orderAscending = true)
         {
-            var exchangeRates = (await _currencyRepository.GetAllAsync())
+            var exchangeRates = (await _exchangeRateRepository.GetAllAsync())
                 .Where(_ => _.Created.Date == DateTime.Now.Date)
                 .GroupBy(_ => _.Kod)
                 .Select(_ => _.Last());
@@ -80,7 +80,7 @@ namespace Protel.ExchangeRates.Services
                                 exchangeRate.ExchangeRateDate = DateTime.TryParseExact(xmlDocument["Tarih_Date"].GetAttribute("Tarih"), "dd.MM.yyyy", provider: null, style: System.Globalization.DateTimeStyles.None, out var exchangeRateDate) ? exchangeRateDate : null;
                                 exchangeRates = exchangeRates.Append(exchangeRate);
 
-                                await _currencyRepository.InsertAsync(exchangeRate);
+                                await _exchangeRateRepository.InsertAsync(exchangeRate);
                             }
                         }
 
@@ -113,12 +113,12 @@ namespace Protel.ExchangeRates.Services
 
         public async Task<ExchangeRate> GetExchangeRateByIdAsync(int currencyId)
         {
-            return await _currencyRepository.GetByIdAsync(currencyId);
+            return await _exchangeRateRepository.GetByIdAsync(currencyId);
         }
 
         public async Task<ExchangeRate> GetExchangeRateOfCurrencyByDateAsync(string currencyCode, DateTime date)
         {
-            var exchangeRate = (await _currencyRepository.GetAllAsync()).Where(_ => _.ExchangeRateDate?.Date == date.Date).LastOrDefault();
+            var exchangeRate = (await _exchangeRateRepository.GetAllAsync()).Where(_ => _.ExchangeRateDate?.Date == date.Date).LastOrDefault();
 
             if (exchangeRate is null)
             {
@@ -155,7 +155,7 @@ namespace Protel.ExchangeRates.Services
                                 exchangeRate.CurrencyCode = currency.Attributes["CurrencyCode"].Value;
                                 exchangeRate.ExchangeRateDate = date;
 
-                                await _currencyRepository.InsertAsync(exchangeRate);
+                                await _exchangeRateRepository.InsertAsync(exchangeRate);
                             }
                         }
                     }
@@ -170,7 +170,7 @@ namespace Protel.ExchangeRates.Services
             if (exchangeRate is null)
                 throw new ArgumentNullException(nameof(exchangeRate));
 
-            await _currencyRepository.InsertAsync(exchangeRate);
+            await _exchangeRateRepository.InsertAsync(exchangeRate);
         }
 
         public async Task InsertExchangeRateAsync(IList<ExchangeRate> exchangeRates)
@@ -178,12 +178,49 @@ namespace Protel.ExchangeRates.Services
             if (exchangeRates is null)
                 throw new ArgumentNullException(nameof(exchangeRates));
 
-            await _currencyRepository.InsertAsync(exchangeRates);
+            await _exchangeRateRepository.InsertAsync(exchangeRates);
         }
 
-        public Task<IList<ExchangeRate>> UpdateExchangeRatesAsync()
+        public async Task UpdateExchangeRatesAsync()
         {
-            throw new NotImplementedException();
+            using (var client = _clientFactory.CreateClient("TCMB"))
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, $"today.xml");
+                var response = await client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    using var responseStream = await response.Content.ReadAsStreamAsync();
+
+                    StreamReader reader = new StreamReader(responseStream);
+                    var result = reader.ReadToEnd();
+
+                    var xmlDocument = new XmlDocument();
+                    xmlDocument.LoadXml(result);
+
+                    XmlNodeList currencies = xmlDocument.GetElementsByTagName("Currency");
+
+                    foreach (XmlNode currency in currencies)
+                    {
+                        if (Constants.DEFAULT_CURRENCIES.Contains(currency.Attributes["Kod"].Value.ToUpper()))
+                        {
+                            var serializedXmlNode = JsonConvert.SerializeXmlNode(
+                            currency,
+                            Newtonsoft.Json.Formatting.Indented,
+                            true);
+
+                            var exchangeRate = JsonConvert.DeserializeObject<ExchangeRate>(serializedXmlNode);
+
+                            exchangeRate.CrossOrder = Convert.ToInt32(currency.Attributes["CrossOrder"].Value);
+                            exchangeRate.Kod = currency.Attributes["Kod"].Value;
+                            exchangeRate.CurrencyCode = currency.Attributes["CurrencyCode"].Value;
+                            exchangeRate.ExchangeRateDate = DateTime.Now;
+
+                            await _exchangeRateRepository.InsertAsync(exchangeRate);
+                        }
+                    }
+                }
+            }
         }
 
         #endregion
