@@ -10,7 +10,7 @@ namespace Protel.ExchangeRates.Services
     /// <summary>
     /// ExchangeRate service interface
     /// </summary>
-    public partial interface ICurrencyService
+    public partial interface IExchangeRateService
     {
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Protel.ExchangeRates.Services
         /// A task that represents the asynchronous operation
         /// The task result contains the currencies
         /// </returns>
-        Task<IList<ExchangeRate>> GetExchangeRateOfCurrencyByDateAsync(string currencyCode, DateTime date);//https://www.tcmb.gov.tr/kurlar/201706/22062017.xml
+        Task<ExchangeRate> GetExchangeRateOfCurrencyByDateAsync(string currencyCode, DateTime date);//https://www.tcmb.gov.tr/kurlar/201706/22062017.xml
 
         /// <summary>
         /// Gets all currencies
@@ -42,7 +42,7 @@ namespace Protel.ExchangeRates.Services
         /// A task that represents the asynchronous operation
         /// The task result contains the exchange rates
         /// </returns>
-        Task<IList<ExchangeRate>> GetCurrentExchangeRatesAsync();
+        Task<IList<ExchangeRate>> GetCurrentExchangeRatesAsync(string sortBy, bool orderAscending);
 
 
         /// <summary>

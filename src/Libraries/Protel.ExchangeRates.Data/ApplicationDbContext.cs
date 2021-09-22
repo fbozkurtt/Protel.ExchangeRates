@@ -90,7 +90,7 @@ namespace Protel.ExchangeRates.Data
 
         #region Properties
 
-        public DbSet<ExchangeRate> Currency { get; set; }
+        public DbSet<ExchangeRate> ExchangeRates { get; set; }
 
         #endregion
     }

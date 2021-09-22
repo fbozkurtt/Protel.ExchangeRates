@@ -11,7 +11,7 @@ namespace Protel.ExchangeRates.Core.Infrastructure
 {
     public interface IApplicationDbContext
     {
-        public DbSet<ExchangeRate> Currency { get; set; }
+        public DbSet<ExchangeRate> ExchangeRates { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

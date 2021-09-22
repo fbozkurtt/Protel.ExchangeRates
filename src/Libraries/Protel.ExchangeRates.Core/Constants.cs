@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Protel.ExchangeRates.API
+namespace Protel.ExchangeRates.Core
 {
-    public static class Apisettings
+    public static class Constants
     {
         public static IList<string> DEFAULT_CURRENCIES = new List<string>() {
             "USD",

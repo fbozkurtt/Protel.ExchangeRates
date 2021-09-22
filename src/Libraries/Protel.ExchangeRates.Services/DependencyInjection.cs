@@ -17,9 +17,13 @@ namespace Protel.ExchangeRates.Services
         {
             services.AddScoped<IDomainEventService, DomainEventService>();
 
-            services.AddScoped<ICurrencyService, CurrencyService>();
+            services.AddScoped<IExchangeRateService, ExchangeRateService>();
 
-            services.AddHttpClient();
+            services.AddHttpClient("TCMB", c =>
+            {
+                c.BaseAddress = new Uri("https://www.tcmb.gov.tr/kurlar/");
+                c.DefaultRequestHeaders.Add("Accept", "application/xml");
+            });
 
             return services;
         }

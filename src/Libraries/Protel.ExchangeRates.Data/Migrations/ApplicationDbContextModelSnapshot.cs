@@ -26,25 +26,22 @@ namespace Protel.ExchangeRates.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<decimal>("BanknoteBuying")
+                    b.Property<decimal?>("BanknoteBuying")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("BanknoteSelling")
+                    b.Property<decimal?>("BanknoteSelling")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CrossOrder")
+                    b.Property<int?>("CrossOrder")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("CrossRateOther")
+                    b.Property<decimal?>("CrossRateOther")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("CrossRateUSD")
+                    b.Property<decimal?>("CrossRateUSD")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CurrencyCode")
@@ -53,16 +50,19 @@ namespace Protel.ExchangeRates.Data.Migrations
                     b.Property<string>("CurrencyName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("ForexBuying")
+                    b.Property<DateTime?>("ExchangeRateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("ForexBuying")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<decimal>("ForexSelling")
+                    b.Property<decimal?>("ForexSelling")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Kod")
+                    b.Property<string>("Isim")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Kod")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<short>("Unit")
@@ -70,7 +70,7 @@ namespace Protel.ExchangeRates.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExchangeRate");
+                    b.ToTable("ExchangeRates");
                 });
 #pragma warning restore 612, 618
         }

@@ -49,6 +49,7 @@ namespace Protel.ExchangeRates.Data
         {
             await _applicationDbContext.Set<TEntity>().AddAsync(entity);
 
+            await _applicationDbContext.SaveChangesAsync();
             //if (publishEvent)
             //{
             //    await _mediator.Publish(new EntityInsertedEvent(entity));
@@ -59,6 +60,7 @@ namespace Protel.ExchangeRates.Data
         {
             await _applicationDbContext.Set<TEntity>().AddRangeAsync(entities);
 
+            await _applicationDbContext.SaveChangesAsync();
             //if (publishEvent)
             //{
             //    foreach (var entity in entities)
